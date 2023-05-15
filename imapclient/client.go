@@ -120,6 +120,7 @@ type Client struct {
 	pendingCmds  []command
 	contReqs     []continuationRequest
 	closed       bool
+	timeout      time.Duration
 }
 
 // New creates a new IMAP client.
@@ -970,7 +971,7 @@ func (ce *commandEncoder) end() {
 	if ce.Encoder != nil {
 		ce.flush()
 	}
-	ce.client.setWriteTimeout(0)
+	ce.client.setWriteTimeout(ce.client.timeout)
 	ce.client.encMutex.Unlock()
 }
 
