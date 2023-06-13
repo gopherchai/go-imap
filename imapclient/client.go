@@ -120,6 +120,7 @@ type Client struct {
 	pendingCmds  []command
 	contReqs     []continuationRequest
 	closed       bool
+	//timeout      time.Duration
 }
 
 // New creates a new IMAP client.
@@ -145,6 +146,7 @@ func New(conn net.Conn, options *Options) *Client {
 		greetingCh: make(chan struct{}),
 		decCh:      make(chan struct{}),
 		state:      imap.ConnStateNone,
+		//timeout:    time.Second,
 	}
 	go client.read()
 	return client
